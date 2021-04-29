@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using ShoppingCart.Models;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,17 @@ namespace ShoppingCart.Controllers
     {
         private readonly ItemContext _context;
 
-        public ShopController()
+        public ShopController(ItemContext context)
         {
-            _context = new ItemContext();
-            _context.Database.EnsureCreated();
+            _context = context;
+            try
+            {
+                _context.Database.EnsureCreated();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
 /*

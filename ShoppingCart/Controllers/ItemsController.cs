@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using ShoppingCart.Models;
 
 namespace ShoppingCart.Controllers
@@ -13,10 +15,18 @@ namespace ShoppingCart.Controllers
     {
         private readonly ItemContext _context;
 
-        public ItemsController()
+
+        public ItemsController(IConfiguration configuration, IOptions<GlobalData> globalData, ItemContext Context)
         {
-            _context = new ItemContext();
-            _context.Database.EnsureCreated();
+            _context = Context;
+            try
+            { 
+                _context.Database.EnsureCreated();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         // GET: Items
