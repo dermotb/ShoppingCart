@@ -6,12 +6,12 @@
 
 <h1>Index</h1>
 
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Code)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
@@ -25,24 +25,20 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Code)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.ActionLink("Add to cart", "Add", new { code=item.Code })
+                <a asp-action="Edit" asp-route-id="@item.Code">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Code">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Code">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
-
-<h2>
-    Total cost of items in cart: @ViewBag.TotalPrice.ToString("C2"))
-</h2>
-
-<h5>@Html.ActionLink("Add Product", "AddProducts")</h5>
+<p>
+    <h5>@Html.ActionLink("Home Page","GoHome")</h5>
+</p>

@@ -10,15 +10,13 @@ namespace ShoppingCart.Controllers
 {
     public class ShopController : Controller
     {
-        private static List<Item> products
-            = new List<Item>()
-            {
-                new Item(){Code="ABC123", Description="Cuddly Toy", Price=5.95},
-                new Item(){Code="AB23XY", Description="Alarm Clock", Price=15.23},
-                new Item(){Code="XYZ556", Description="Laptop", Price=1052.10},
-                new Item(){Code="53KZC", Description="Keyboard", Price=25.75 }
+        private readonly ItemsContext _context;
 
-            };
+        public ShopController(ItemsContext context)
+        {
+            _context = context;
+            _context.Database.EnsureCreated();
+        }
 
         private static Cart myCart = new Cart();
         
@@ -26,7 +24,7 @@ namespace ShoppingCart.Controllers
         public ActionResult Index()
         {
             ViewBag.TotalPrice = myCart.CalculateTotalPrice();
-            return View(products);
+            return View(_context.products);
         }
 
 
@@ -34,7 +32,7 @@ namespace ShoppingCart.Controllers
         {
             try
             {
-                Item found = products.FirstOrDefault(p => p.Code.ToUpper(CultureInfo.CurrentCulture) == code.ToUpper(CultureInfo.CurrentCulture));
+                Item found = _context.products.FirstOrDefault(p => p.Code.ToUpper() == code.ToUpper());
                 if (found != null)
                 {
                     myCart.AddItem(found);
@@ -47,6 +45,10 @@ namespace ShoppingCart.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult AddProducts()
+        {
+            return RedirectToAction("Index", "ItemsDB");
+        }
 
     }
 }

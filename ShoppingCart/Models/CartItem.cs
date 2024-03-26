@@ -4,6 +4,7 @@ namespace ShoppingCart.Models
 {
     public class Item
     {
+        [Key]
         public String Code { get; set; }
         public String Description { get; set; }
         [Display(Name = "Price (€)")]
