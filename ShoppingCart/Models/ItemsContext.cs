@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace ShoppingCart.Models
 {
 
-    //public class ItemsContext : DbContext
-    public class ItemsContext : IdentityDbContext<IdentityUser>
+    public class ItemsContext : DbContext
     {
         public ItemsContext(DbContextOptions<ItemsContext> options) :base(options)
         {
