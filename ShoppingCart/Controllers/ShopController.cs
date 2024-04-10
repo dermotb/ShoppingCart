@@ -1,4 +1,5 @@
 ﻿using Humanizer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -45,6 +46,7 @@ namespace ShoppingCart.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Administrator, PowerUser")]
         public ActionResult AddProducts()
         {
             return RedirectToAction("Index", "ItemsDB");
